@@ -1,3 +1,5 @@
+import 'package:weather_project/features/weather/domain/entities/weather_entity.dart';
+
 import 'humidity.dart';
 import 'parameter.dart';
 import 'precipitation.dart';
@@ -6,7 +8,7 @@ import 'snow_precipitation.dart';
 import 'temperature.dart';
 import 'wind_speed.dart';
 
-class WeatherModel {
+class WeatherModel extends WeatherEntity {
 	Temperature? temperature;
 	Humidity? humidity;
 	Precipitation? precipitation;
@@ -23,7 +25,7 @@ class WeatherModel {
 		this.windSpeed, 
 		this.snowDepth, 
 		this.parameters, 
-	});
+	}) : super(temperature:temperature , humidity: humidity, precipitation: precipitation, snowPrecipitation: snowPrecipitation, windSpeed: windSpeed, snowDepth: snowDepth);
 
 	factory WeatherModel.fromJson(Map<String, dynamic> json) => WeatherModel(
 				temperature: json['temperature'] == null
