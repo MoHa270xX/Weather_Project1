@@ -4,38 +4,52 @@ import 'package:weather_project/core/utils/api_service.dart';
 import 'package:weather_project/features/weather/data/models/weather_model/weather_model.dart';
 import 'package:weather_project/features/weather/domain/entities/weather_entity.dart';
 
-abstract class WetherRemotDataSource {
+abstract class WeatherRemoteDataSource {
   Future<WeatherEntity> getWeatherData({
     required double latitude,
     required double longitude,
     required DateTime date,
-    higherAccuracy = false,
+    bool higherAccuracy = false,
   });
 }
 
-class WeatherRemoteDataSourceImple extends WetherRemotDataSource {
+class WeatherRemoteDataSourceImple extends WeatherRemoteDataSource {
   final ApiService apiService;
 
   WeatherRemoteDataSourceImple({required this.apiService});
+
   @override
   Future<WeatherEntity> getWeatherData({
     required double latitude,
     required double longitude,
     required DateTime date,
-    higherAccuracy = false,
+    bool higherAccuracy = false,
   }) async {
-    var data = await apiService.get(
+    final data = await apiService.get(
       latitude: latitude,
       longitude: longitude,
       date: date,
-      higherAccuracy: false,
+      higherAccuracy: higherAccuracy,
     );
-    var weatherData = WeatherModel.fromJson(data);
+
+    
+    final weatherData = WeatherModel.fromJson(data);
+    
+    
+    await saveData(weatherData, latitude, longitude, date);
+    
     return weatherData;
   }
 
-  void saveData(WeatherEntity WeatherData) {
+  Future<void> saveData(WeatherEntity weatherData, double lat, double lon, DateTime date) async {
     var box = Hive.box<WeatherEntity>(kWeatherBox);
-    box.add(WeatherData);
+
+    final key = _generateKey(lat, lon, date);
+    await box.put(key, weatherData); 
   }
+}
+
+String _generateKey(double lat, double lon, DateTime date) {
+  final formattedDate = "${date.year}-${date.month}-${date.day}";
+  return "$lat-$lon-$formattedDate";
 }
