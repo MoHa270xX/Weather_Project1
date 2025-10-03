@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:weather_project/core/utils/app_router.dart';
+import 'package:weather_project/features/weather/presentation/widgets/containu_button.dart';
 import 'package:weather_project/features/weather/presentation/widgets/custom_app_bar.dart';
 import 'package:weather_project/features/weather/presentation/widgets/information_card.dart';
 import 'package:weather_project/features/weather/presentation/widgets/probability_card.dart';
@@ -20,7 +23,7 @@ class _WeatherProbabilitiesScreenState
         children: [
           CustomAppBar(
             title: 'Weather Probabilities',
-            showBackText: true,
+            showBackText: false,
             trailing: const Icon(Icons.download_outlined, color: Colors.white),
           ),
           Expanded(
@@ -55,9 +58,11 @@ class _WeatherProbabilitiesScreenState
                       probability: '42%',
                     ),
                     const SizedBox(height: 24),
-                    // _buildTempDistributionCard(),
+                    ContinueButton(text: "Export Data",onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kExportView);
+                    },),
                     const SizedBox(height: 24),
-                    // _buildTenYearTrendCard(),
+                  
                   ],
                 ),
               ),

@@ -18,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedNavIndex = 0;
    
   final List<Widget> _screens = const [
-   
+    
     LocationTimeScreenBody(),
     MapScreen(mode: MapMode.dropPin),
     WeatherProbabilitiesScreen(),

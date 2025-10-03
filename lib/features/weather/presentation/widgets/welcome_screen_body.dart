@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:weather_project/core/utils/app_router.dart';
 import 'package:weather_project/features/weather/presentation/widgets/containu_button.dart';
 import 'package:weather_project/features/weather/presentation/widgets/how_it_works.dart';
 import 'package:weather_project/features/weather/presentation/widgets/sign_in_button.dart';
@@ -25,7 +27,11 @@ class WelcomeScreenBody extends StatelessWidget {
             WelcomeSubtittle(),
             const Spacer(flex: 3),
             // Pass the context to the button builder
-            ContinueButton(),
+            ContinueButton(
+                text: "Continue as a Gust",
+                        onPressed: () {
+                          GoRouter.of(context).push(AppRouter.kLocationView);
+                        },),
             const SizedBox(height: 16),
             SignInButton(),
             const SizedBox(height: 24),

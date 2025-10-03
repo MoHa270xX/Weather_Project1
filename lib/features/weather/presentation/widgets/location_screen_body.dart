@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_project/core/utils/app_router.dart';
+import 'package:weather_project/features/weather/presentation/widgets/containu_button.dart';
 import 'package:weather_project/features/weather/presentation/widgets/custom_app_bar.dart';
 import 'package:weather_project/features/weather/presentation/widgets/location_card.dart';
 
@@ -11,12 +14,6 @@ class LocationTimeScreenBody extends StatefulWidget {
 }
 
 class _LocationTimeScreenState extends State<LocationTimeScreenBody> {
- 
-//final List<String> daysInMonth = generateCalendarDays(2025, 10);
-
-
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +21,12 @@ class _LocationTimeScreenState extends State<LocationTimeScreenBody> {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(title: 'Location & Time'),
+            CustomAppBar(
+              title: 'Location & Time',
+              onBack: () {
+                GoRouter.of(context).pop();
+              },
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -33,7 +35,13 @@ class _LocationTimeScreenState extends State<LocationTimeScreenBody> {
                     children: [
                       const LocationCard(),
                       const SizedBox(height: 24),
-                     DateTimePickerWidget(),
+                      DateTimePickerWidget(),
+                      ContinueButton(
+                        text: "Continue to Weather Details",
+                        onPressed: () {
+                          GoRouter.of(context).push(AppRouter.kMain);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -42,16 +50,8 @@ class _LocationTimeScreenState extends State<LocationTimeScreenBody> {
           ],
         ),
       ),
-      
     );
   }
-
-
-
- 
-
-
- 
 }
 
 class DateTimePickerWidget extends StatefulWidget {
@@ -62,34 +62,32 @@ class DateTimePickerWidget extends StatefulWidget {
 }
 
 class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
-  
   DateTime _selectedDate = DateTime.now();
-  
+
   final TextEditingController _dateController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    
+
     _dateController.text = DateFormat('MMM dd, yyyy').format(_selectedDate);
   }
 
-  
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(2000), 
-      lastDate: DateTime(2101),  
-      
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: Color(0xFF172A4D), 
-              onPrimary: Colors.white,     
-              surface: Color(0xFF0A1C3E), 
-              onSurface: Colors.white,      
+              primary: Color(0xFF172A4D),
+              onPrimary: Colors.white,
+              surface: Color(0xFF0A1C3E),
+              onSurface: Colors.white,
             ),
             dialogBackgroundColor: const Color(0xFF172A4D),
           ),
@@ -98,7 +96,6 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
       },
     );
 
-    
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
@@ -119,7 +116,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
       padding: const EdgeInsets.all(16.0),
       child: TextField(
         controller: _dateController,
-        readOnly: true,  
+        readOnly: true,
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           labelText: 'Date/Time',
@@ -137,7 +134,6 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
           ),
         ),
         onTap: () {
-          
           _selectDate(context);
         },
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;
@@ -22,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: onBack ?? () => Navigator.of(context).pop(),
+            onTap: onBack ?? () => GoRouter.of(context).pop(),
             child: Row(
               children: [
                 const Icon(Icons.arrow_back, color: Colors.white),
@@ -44,7 +45,7 @@ class CustomAppBar extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          trailing ?? const SizedBox(width: 24), // فراغ مكان الأيقونة لو مش موجودة
+          trailing ?? const SizedBox(width: 24),  
         ],
       ),
     );
