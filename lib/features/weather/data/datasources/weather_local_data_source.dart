@@ -3,7 +3,7 @@ import 'package:weather_project/constants.dart';
 import 'package:weather_project/features/weather/domain/entities/weather_entity.dart';
 
 abstract class WeatherLocalDataSource {
-  WeatherEntity getWeatherData({
+  WeatherEntity? getWeatherData({
     required double latitude,
     required double longitude,
     required DateTime date,
