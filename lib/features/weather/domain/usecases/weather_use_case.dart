@@ -27,7 +27,9 @@ class WeatherParams {
   final DateTime date;
   final bool higherAccuracy;
 
-  WeatherParams(this.higherAccuracy, {
+  WeatherParams(
+    {
+    required this.higherAccuracy,
     required this.latitude,
     required this.longitude,
     required this.date,
