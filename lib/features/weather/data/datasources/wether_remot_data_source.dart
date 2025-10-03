@@ -1,3 +1,5 @@
+import 'package:hive_flutter/adapters.dart';
+import 'package:weather_project/constants.dart';
 import 'package:weather_project/core/utils/api_service.dart';
 import 'package:weather_project/features/weather/data/models/weather_model/weather_model.dart';
 import 'package:weather_project/features/weather/domain/entities/weather_entity.dart';
@@ -30,5 +32,10 @@ class WeatherRemoteDataSourceImple extends WetherRemotDataSource {
     );
     var weatherData = WeatherModel.fromJson(data);
     return weatherData;
+  }
+
+  void saveData(WeatherEntity WeatherData) {
+    var box = Hive.box<WeatherEntity>(kWeatherBox);
+    box.add(WeatherData);
   }
 }
