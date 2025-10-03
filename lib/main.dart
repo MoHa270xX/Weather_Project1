@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:weather_project/constants.dart';
 import 'package:weather_project/core/utils/app_router.dart';
+import 'package:weather_project/features/weather/domain/entities/weather_entity.dart';
 
-void main() {
+void main() async{
+    await Hive.initFlutter();
+  Hive.registerAdapter(WeatherEntityAdapter());
+  await Hive.openBox<WeatherEntity>(kWeatherBox);
   runApp(const MyApp());
 }
 
