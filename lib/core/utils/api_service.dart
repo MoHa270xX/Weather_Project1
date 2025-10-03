@@ -9,7 +9,7 @@ class ApiService {
   Dio _dio;
 
   ApiService(this._dio);
-  Future<Either<Failure, WeatherEntity>> get({
+  Future<Map<String,dynamic>> get({
     required double latitude,
     required double longitude,
     required DateTime date,
